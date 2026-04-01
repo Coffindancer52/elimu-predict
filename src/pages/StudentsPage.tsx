@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Plus, GraduationCap } from "lucide-react";
+import { Search, GraduationCap } from "lucide-react";
 import { useState } from "react";
+import AddStudentDialog from "@/components/AddStudentDialog";
 import { useAuth } from "@/contexts/AuthContext";
 
 const MOCK_STUDENTS = [
@@ -28,9 +29,7 @@ const StudentsPage = () => {
           <h1 className="text-2xl font-heading font-bold text-foreground">Students</h1>
           <p className="text-muted-foreground text-sm mt-1">Manage student records</p>
         </div>
-        {hasRole(["IT_HANDLER", "ADMIN"]) && (
-          <Button><Plus className="h-4 w-4 mr-2" />Add Student</Button>
-        )}
+        {hasRole(["IT_HANDLER", "ADMIN"]) && <AddStudentDialog />}
       </div>
       <div className="relative mb-4 max-w-sm">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />

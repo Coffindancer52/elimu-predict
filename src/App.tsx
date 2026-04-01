@@ -16,6 +16,7 @@ import ReportsPage from "@/pages/ReportsPage";
 import RegisterUsersPage from "@/pages/RegisterUsersPage";
 import UserManagementPage from "@/pages/UserManagementPage";
 import AuditLogsPage from "@/pages/AuditLogsPage";
+import MyChildPage from "@/pages/MyChildPage";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -58,6 +59,12 @@ const App = () => (
                 <Route path="/user-management" element={<UserManagementPage />} />
                 <Route path="/role-management" element={<UserManagementPage />} />
                 <Route path="/audit-logs" element={<AuditLogsPage />} />
+              </Route>
+            </Route>
+
+            <Route element={<ProtectedRoute allowedRoles={["PARENT"]} />}>
+              <Route element={<AppLayout />}>
+                <Route path="/my-child" element={<MyChildPage />} />
               </Route>
             </Route>
 
