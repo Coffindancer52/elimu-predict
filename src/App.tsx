@@ -16,6 +16,7 @@ import ReportsPage from "@/pages/ReportsPage";
 import RegisterUsersPage from "@/pages/RegisterUsersPage";
 import UserManagementPage from "@/pages/UserManagementPage";
 import AuditLogsPage from "@/pages/AuditLogsPage";
+import MyChildPage from "@/pages/MyChildPage";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
