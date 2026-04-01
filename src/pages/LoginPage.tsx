@@ -25,6 +25,7 @@ const LoginPage = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
@@ -168,7 +169,40 @@ const LoginPage = () => {
                     "Sign In"
                   )}
                 </Button>
+
+                <div className="flex justify-end">
+                  <Button
+                    type="button"
+                    variant="link"
+                    className="px-0 text-sm text-primary h-auto py-0"
+                    onClick={() => setShowForgotPassword(true)}
+                  >
+                    Forgot password?
+                  </Button>
+                </div>
               </form>
+
+              {showForgotPassword && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  className="mt-4 p-4 rounded-lg bg-muted/50 border border-border"
+                >
+                  <p className="text-sm font-semibold text-foreground mb-2">Reset Your Password</p>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Contact your school's IT department with your Staff/Parent ID to reset your password.
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowForgotPassword(false)}
+                    >
+                      Close
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
 
               <div className="mt-6 pt-4 border-t border-border">
                 <p className="text-xs text-muted-foreground text-center">
