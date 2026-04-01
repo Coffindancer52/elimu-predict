@@ -54,32 +54,72 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
 
 const CATEGORIES = ["Languages", "Sciences", "Humanities", "Technical", "Creative Arts"];
 
-const SubjectsPage = () => (
-  <div className="animate-fade-in">
-    <div className="mb-6">
-      <h1 className="text-2xl font-heading font-bold text-foreground">Subjects</h1>
-      <p className="text-muted-foreground text-sm mt-1">View and manage subject assignments</p>
-    </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {MOCK_SUBJECTS.map((s) => (
-        <Card key={s.id} className="hover:shadow-lg transition-shadow">
-          <CardContent className="p-5">
-            <div className="flex items-start gap-3">
-              <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                <BookOpen className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <p className="font-mono text-xs text-muted-foreground">{s.code}</p>
-                <h3 className="font-heading font-semibold text-foreground">{s.name}</h3>
-                <p className="text-sm text-muted-foreground mt-1">Teacher: {s.teacher}</p>
-                <p className="text-xs text-muted-foreground">Class: {s.className}</p>
-              </div>
+const SubjectsPage = () => {
+  const [search, setSearch] = useState("");
+
+  const filtered = SUBJECTS.filter(
+    (s) => s.name.toLowerCase().includes(search.toLowerCase()) || s.code.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="animate-fade-in">
+      <div className="mb-6">
+        <h1 className="text-2xl font-heading font-bold text-foreground">Subjects</h1>
+        <p className="text-muted-foreground text-sm mt-1">All subjects taught in Kenyan secondary schools (KCSE curriculum)</p>
+      </div>
+
+      <div className="relative mb-6 max-w-sm">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input
+          placeholder="Search subjects..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="pl-10"
+        />
+      </div>
+
+      {CATEGORIES.map((category) => {
+        const subjects = filtered.filter((s) => s.category === category);
+        if (subjects.length === 0) return null;
+
+        return (
+          <div key={category} className="mb-8">
+            <h2 className="text-lg font-heading font-semibold text-foreground mb-3 flex items-center gap-2">
+              {CATEGORY_ICONS[category]}
+              {category}
+              <Badge variant="secondary" className="ml-1 text-xs">{subjects.length}</Badge>
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {subjects.map((s) => (
+                <Card key={s.id} className="hover:shadow-lg transition-shadow">
+                  <CardContent className="p-5">
+                    <div className="flex items-start gap-3">
+                      <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                        <BookOpen className="h-5 w-5 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="font-mono text-xs text-muted-foreground">{s.code}</p>
+                          {s.compulsory && (
+                            <Badge variant="default" className="text-[10px] px-1.5 py-0">Compulsory</Badge>
+                          )}
+                        </div>
+                        <h3 className="font-heading font-semibold text-foreground">{s.name}</h3>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
-          </CardContent>
-        </Card>
-      ))}
+          </div>
+        );
+      })}
+
+      {filtered.length === 0 && (
+        <p className="text-center text-muted-foreground py-12">No subjects found matching your search.</p>
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 export default SubjectsPage;
