@@ -1,7 +1,5 @@
 import { AlertTriangle, Lightbulb } from "lucide-react";
-// import api from '../lib/api'
-import api from "../lib/api";
-import { useState } from "react";
+import api from '../lib/api';
 // const MOCK_ANALYSIS = [
 //     { student: "Brian Otieno", admissionNo: "ADM2024001", subject: "Mathematics", riskPercentage: 82, riskLevel: "HIGH",
 //         suggestion: "1. Practice 10 algebra problems daily focusing on quadratic equations.\n2. Join after-school math remedial sessions.\n3. Use visual aids and Khan Academy videos for geometry concepts." },
@@ -42,7 +40,8 @@ const AiAnalysisPage = () =>
 }
 
 
-return(<div className="animate-fade-in">
+return(
+<div className="animate-fade-in">
     <div className="page-header">
       <h1>AI Analysis</h1>
       <p className="subtitle">AI-powered risk predictions and learning recommendations</p>
@@ -120,12 +119,9 @@ return(<div className="animate-fade-in">
             </div>
           </div>
         </div>
-      )}
+      ))};
+  </div>
+  </div>
+    )}
+export default AiAnalysisPage; 
 
-      {result && !Array.isArray(result) && (
-        <div className="card"><div className="card-content"><pre style={{whiteSpace:"pre-wrap"}}>{JSON.stringify(result, null, 2)}</pre></div></div>
-      )}
-    </div>
-  </div>);
-}
-export default AiAnalysisPage;
