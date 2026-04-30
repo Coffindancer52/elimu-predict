@@ -68,7 +68,7 @@ useEffect(()=>{
             
             style={{ width: "100%", maxWidth: 360 }}
           /> */}
-          /> */}
+          
           </div>
           <div className="field">
           <label>term</label>
@@ -86,7 +86,7 @@ useEffect(()=>{
             className="input"
             style={{ width: "100%", maxWidth: 360 }}
           /> */}
-          /> */}
+          
           </div>
           <div className="field">
           <label>Year</label>
