@@ -123,4 +123,5 @@ return(<div className="animate-fade-in">
     </div>
   </div>);
 }
-export default AiAnalysisPage;
+export default AiAnalysisPage; 
+
