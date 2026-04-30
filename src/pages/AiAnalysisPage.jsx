@@ -40,7 +40,8 @@ const AiAnalysisPage = () =>
 }
 
 
-return(<div className="animate-fade-in">
+return(
+<div className="animate-fade-in">
     <div className="page-header">
       <h1>AI Analysis</h1>
       <p className="subtitle">AI-powered risk predictions and learning recommendations</p>
@@ -118,13 +119,9 @@ return(<div className="animate-fade-in">
             </div>
           </div>
         </div>
-      )}
-
-      {result && !Array.isArray(result) && (
-        <div className="card"><div className="card-content"><pre style={{whiteSpace:"pre-wrap"}}>{JSON.stringify(result, null, 2)}</pre></div></div>
-      )}
-    </div>
-  </div>);
-}
+      ))};
+  </div>
+  </div>
+    )}
 export default AiAnalysisPage; 
 
