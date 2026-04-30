@@ -1,4 +1,9 @@
-import { LayoutDashboard, Users, GraduationCap, BookOpen, ClipboardList, Brain, BarChart3, Shield, ScrollText, UserPlus, } from "lucide-react";
+import {
+  LayoutDashboard, Users, GraduationCap, BookOpen, ClipboardList, Brain,
+  BarChart3, Shield, ScrollText, UserPlus, FileText, Lightbulb,
+  PieChart, TrendingUp, Layers, UploadCloud,
+} from "lucide-react";
+
 export const NAV_ITEMS = [
     {
         label: "Dashboard",
@@ -74,6 +79,7 @@ export const NAV_ITEMS = [
         roles: ["PARENT"],
     },
 ];
+
 export function getNavForRole(role) {
-    return NAV_ITEMS.filter((item) => item.roles.includes(role));
+  return NAV_ITEMS.filter((item) => item.roles.includes(role));
 }

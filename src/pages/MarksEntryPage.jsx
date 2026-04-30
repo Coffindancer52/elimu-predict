@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "@/lib/toast";
 import api from "../lib/api";
 // const ADMISSION_RE = /^[A-Z]{2,4}\d{3,8}$/;
@@ -91,6 +92,7 @@ parseFloat(formData.marksObtained)
         alert("success")
         
         toast.success("Marks uploaded successfully", { description: `Marks saved for ${resp.admissionNumber}` });
+        
         }
         catch(error){
           alert (error.message)
@@ -144,6 +146,9 @@ parseFloat(formData.marksObtained)
                   <option value="EXAM_1">EXAM 1</option>
                   <option value="EXAM_2">EXAM 2</option>
                   <option value="EXAM_3">EXAM 3</option>
+                  <option value="EXAM_1">EXAM 1</option>
+                  <option value="EXAM_2">EXAM 2</option>
+                  <option value="EXAM_3">EXAM 3</option>
                 </select>
                 {errors.examType && <p style={errStyle}>{errors.examType}</p>}
               </div>
@@ -159,7 +164,7 @@ parseFloat(formData.marksObtained)
               </div>
               <div className="field">
                 <label className="label">Academic Year</label>
-                <input className="input" inputMode="numeric"pattern="\d*" required value={formData.academicYear} onChange={(e) => set("academicYear", e.target.value)} maxLength={4}/>
+                <input className="input" type="number"inputMode="numeric"pattern="\d*" required value={formData.academicYear} onChange={(e) => set("academicYear", e.target.value)} maxLength={4}/>
                 {errors.academicYear && <p style={errStyle}>{errors.academicYear}</p>}
               </div>
             </div>

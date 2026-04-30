@@ -9,22 +9,95 @@ import api from '../lib/api';
 //         suggestion: "1. Create flashcards for chemical equations and reactions.\n2. Watch YouTube videos on balancing equations.\n3. Practice past papers for organic chemistry." },
 // ];
 const riskClass = { HIGH: "danger", MEDIUM: "warning", LOW: "success" };
-const AiAnalysisPage = () => (<div className="animate-fade-in">
+
+
+const AiAnalysisPage = () => 
+{
+
+  const[admissionNumber,setadm]=useState("")
+  const[term,setTerm]=useState("")
+  const[academicyear,setacademicYear]=useState("")
+  const [user,setUser]=useState([])
+  
+  const fetch=async(e)=>{
+    e.preventDefault();
+    alert("loading")
+  try{
+    alert("fetching")
+    const resp=await api.post(`/ai/analyze/student/${admissionNumber}`,{
+    "term":term,
+    "academicYear":parseInt(academicyear),
+  })
+  
+  setUser(resp)
+  alert("success")
+
+  }
+  
+  catch(error){
+    alert(error.message)
+  }
+}
+
+
+return(<div className="animate-fade-in">
     <div className="page-header">
       <h1>AI Analysis</h1>
       <p className="subtitle">AI-powered risk predictions and learning recommendations</p>
     </div>
+    <div className="card">
+        <div className="card-header">
+            <div className="grid grid-2">
+                <div className="field">
+            <label>Admission Number</label>
+          <input
+            type="text"
+            //placeholder="Search by admission no, student or subject..."
+            value={admissionNumber}
+            onChange={(e) => setadm(e.target.value)}
+            className="input"
+            
+            style={{ width: "100%", maxWidth: 360 }}
+          />
+          </div>
+          <div className="field">
+          <label>term</label>
+          <input
+            type="text"
+           // placeholder="Search by admission no, student or subject..."
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+            className="input"
+            style={{ width: "100%", maxWidth: 360 }}
+          />
+          </div>
+          <div className="field">
+          <label>Year</label>
+          <input
+            type="number"
+            //placeholder="Search by admission no, student or subject..."
+            value={academicyear}
+            onChange={(e) => setacademicYear(e.target.value)}
+            className="input"
+            style={{ width: "100%", maxWidth: 360 }}
+          />
+          </div>
+        </div>
+        <div className="flex gap-3 justify-end"><button type="button" onClick={fetch} className="btn btn-primary">
+            Submit</button></div>
+        </div>
+        </div>
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      {MOCK_ANALYSIS.map((a) => (<div key={a.admissionNo + a.subject} className="card">
+      {user.map((a) => (<div key={a.admissionNumber} className="card">
           <div className="card-content">
             <div className="ai-card-row">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <h3 style={{ fontSize: "1rem" }}>{a.student}</h3>
-                  <span className="text-xs font-mono muted-text">{a.admissionNo}</span>
+                  <h3 style={{ fontSize: "1rem" }}>{a.admissionNumber}</h3>
+                  <span className="text-xs font-mono muted-text">{a.trend}</span>
                   <span className={`badge ${riskClass[a.riskLevel]}`}>{a.riskLevel}</span>
                 </div>
-                <p className="text-sm muted-text mb-3">Subject: {a.subject}</p>
+                <p className="text-sm muted-text mb-3">Subject: {a.subjectName}</p>
                 <div className="flex items-center gap-2 mb-3">
                   <AlertTriangle style={{ width: "1rem", height: "1rem", color: "hsl(var(--destructive))", flexShrink: 0 }}/>
                   <div className="flex-1">
@@ -44,7 +117,14 @@ const AiAnalysisPage = () => (<div className="animate-fade-in">
               </div>
             </div>
           </div>
-        </div>))}
+        </div>
+      )}
+
+      {result && !Array.isArray(result) && (
+        <div className="card"><div className="card-content"><pre style={{whiteSpace:"pre-wrap"}}>{JSON.stringify(result, null, 2)}</pre></div></div>
+      )}
     </div>
   </div>);
-export default AiAnalysisPage;
+}
+export default AiAnalysisPage; 
+

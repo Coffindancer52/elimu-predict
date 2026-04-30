@@ -68,6 +68,7 @@ useEffect(()=>{
             
             style={{ width: "100%", maxWidth: 360 }}
           /> */}
+          /> */}
           </div>
           <div className="field">
           <label>term</label>
@@ -85,11 +86,12 @@ useEffect(()=>{
             className="input"
             style={{ width: "100%", maxWidth: 360 }}
           /> */}
+          /> */}
           </div>
           <div className="field">
           <label>Year</label>
           <input
-            type="text"
+            type="number"
             //placeholder="Search by admission no, student or subject..."
             value={year}
             onChange={(e) => setYear(e.target.value)}
