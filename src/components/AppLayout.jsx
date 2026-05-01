@@ -50,7 +50,7 @@ const AppLayout = () => {
             <p className="id">{user[2]}</p>
           </div>
         </div>
-        <button type="button" className="btn btn-ghost danger btn-block" onClick={handleLogout}>
+        <button type="button" className="btn btn-primary" onClick={handleLogout}>
           <LogOut /> Sign Out
         </button>
       </div>

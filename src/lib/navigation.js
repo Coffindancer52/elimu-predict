@@ -12,6 +12,12 @@ export const NAV_ITEMS = [
         roles: ["TEACHER", "SENIOR_TEACHER", "DEPUTY_PRINCIPAL", "PRINCIPAL", "IT_HANDLER", "ADMIN", "PARENT"],
     },
     {
+        label: "Dashboard_1",
+        path: "/dash",
+        icon: LayoutDashboard,
+        roles: ["TEACHER", "SENIOR_TEACHER", "DEPUTY_PRINCIPAL", "PRINCIPAL", "IT_HANDLER", "ADMIN", "PARENT"],
+    },
+    {
         label: "Students",
         path: "/students",
         icon: GraduationCap,
@@ -36,9 +42,21 @@ export const NAV_ITEMS = [
         roles: ["TEACHER", "SENIOR_TEACHER", "DEPUTY_PRINCIPAL", "PRINCIPAL", "PARENT"],
     },
     
+    // {
+    //     label: "AI Analysis",
+    //     path: "/ai-analysis",
+    //     icon: Brain,
+    //     roles: ["TEACHER", "SENIOR_TEACHER", "PRINCIPAL", "PARENT"],
+    // },
     {
-        label: "AI Analysis",
-        path: "/ai-analysis",
+        label: "AI Class Analysis",
+        path: "/school-analysis",
+        icon: Brain,
+        roles: ["TEACHER", "SENIOR_TEACHER", "PRINCIPAL", "PARENT"],
+    },
+    {
+        label: "AI Student Analysis",
+        path: "/student-analysis",
         icon: Brain,
         roles: ["TEACHER", "SENIOR_TEACHER", "PRINCIPAL", "PARENT"],
     },
@@ -52,8 +70,21 @@ export const NAV_ITEMS = [
         label: "Register Users",
         path: "/register-users",
         icon: UserPlus,
+        roles: ["IT_HANDLER","ADMIN"],
+    },
+    {
+        label: "Assign Teacher",
+        path: "/assign-teacher",
+        icon: UserPlus,
         roles: ["IT_HANDLER"],
     },
+    {
+        label: "Register Subject",
+        path: "/register-subject",
+        icon: UserPlus,
+        roles: ["IT_HANDLER"],
+    },
+
     {
         label: "User Management",
         path: "/user-management",

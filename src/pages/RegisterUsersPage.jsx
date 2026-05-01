@@ -2,6 +2,7 @@ import { UserPlus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/lib/toast";
 import api from "../lib/api";
+import { useAuth } from "@/contexts/AuthContext";
 
 const NAME_RE = /^[A-Za-z][A-Za-z'\-\s]{1,49}$/;
 const USER_ID_RE = /^[A-Z]{3}\d{3,5}$/; // e.g. TCH002, PAR001
@@ -24,6 +25,9 @@ const validate = (data) => {
 };
 
 const RegisterUsersPage = () => {
+  const {hasRole}=useAuth()
+  const admin=hasRole(["ADMIN"])
+  const it=hasRole(["IT_HANDLER"])
     const [formData, setFormData] = useState({ fullName: "", userId: "", password: "", role: "" });
     const [errors, setErrors] = useState({});
 
@@ -41,14 +45,25 @@ const RegisterUsersPage = () => {
             return;
         }
         try{
-          const resp=await api.post('/users/register',{
+          if(admin){
+            const resp=await api.post('/users/admin/register',{
           "fullName":formData.fullName,
           "password":formData.password,
           "username":formData.userId,
           "role":formData.role
         })
+          }
+          if(it){
+            const resp=await api.post('/users/register',{
+          "fullName":formData.fullName,
+          "password":formData.password,
+          "username":formData.userId,
+          "role":formData.role
+        })
+          }
+          
 
-        toast.success("User registered successfully", { description: `${resp.fullName} registered on ${resp.createdAt}` });
+        toast.success("User registered successfully");
         setFormData({ fullName: "", userId: "", password: "", role: "" });
         setErrors({});
         }
@@ -92,6 +107,9 @@ const RegisterUsersPage = () => {
                 <option value="DEPUTY_PRINCIPAL">Deputy Principal</option>
                 <option value="PRINCIPAL">Principal</option>
                 <option value="PARENT">Parent</option>
+                {admin &&(
+                  <option value="ADMIN">Admin</option>
+                )}
               </select>
               {errors.role && <p style={errStyle}>{errors.role}</p>}
             </div>

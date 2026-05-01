@@ -32,6 +32,10 @@ import SubjectCardPage from "@/pages/SubjectCardPage";
 import AssignmentsPage from "@/pages/AssignmentsPage";
 import MyClassesPage from "@/pages/MyClassesPage";
 import NotFound from "@/pages/NotFound";
+import SchoolAnalysisPage from "./pages/ai/SchoolAnalysisPage";
+import StudentAnalysisPage from "./pages/ai/StudentAnalysis";
+import DashboardPage1 from "./pages/ai/Dash1";
+//import SubjectsPage from "./pages/SubjectsPage";
 // import ViewMarksPage from "@/pages/ViewMarksPage";
 const App = () => (<AuthProvider>
     <ToastProvider>
@@ -44,10 +48,11 @@ const App = () => (<AuthProvider>
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
               <Route path="/dashboard" element={<DashboardPage />}/>
+              <Route path="/dash" element={<DashboardPage1/>}/>
               <Route path="/students" element={<StudentsPage />}/>
               <Route path="/subjects" element={<SubjectsPage />}/>
               <Route path="/reports" element={<ReportsPage />}/>
-              <Route path="/ai-analysis" element={<AiAnalysisPage />}/>
+              {/* <Route path="/ai-analysis" element={<AiAnalysisPage />}/> */}
               {/* <Route path="/marks/view" element={<ViewMarksPage />}/> */}
             </Route>
           </Route>
@@ -56,6 +61,8 @@ const App = () => (<AuthProvider>
             <Route element={<AppLayout />}>
               {/* <Route path="/marks" element={<MarksEntryPage />}/> */}
               <Route path="/view-marks" element={<ViewMarksPage/>}/>
+              <Route path="/school-analysis" element={<SchoolAnalysisPage/>}/>
+              <Route path="/student-analysis" element={<StudentAnalysisPage/>}/>
             </Route>
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["TEACHER"]}/>}>
@@ -69,8 +76,19 @@ const App = () => (<AuthProvider>
 
           <Route element={<ProtectedRoute allowedRoles={["IT_HANDLER"]}/>}>
             <Route element={<AppLayout />}>
-              <Route path="/register-users" element={<RegisterUsersPage />} />
+              {/* <Route path="/register-users" element={<RegisterUsersPage />} /> */}
               <Route path="/register-students" element={<StudentsPage />} />
+              <Route path="/register-subject" element={<SubjectsPage/>}/>
+              <Route path="/assign-teacher" element={<AssignmentsPage/>}/>
+            </Route>
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["IT_HANDLER","ADMIN"]}/>}>
+            <Route element={<AppLayout />}>
+              <Route path="/register-users" element={<RegisterUsersPage />} />
+
+              {/* <Route path="/register-students" element={<StudentsPage />} />
+              <Route path="/register-subject" element={<SubjectsPage/>}/>
+              <Route path="/assign-teacher" element={<AssignmentsPage/>}/> */}
             </Route>
           </Route>
 

@@ -6,14 +6,14 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const SubjectsPage = () => {
   const { hasRole } = useAuth();
-  const canCreate = hasRole(["ADMIN", "IT_HANDLER", "PRINCIPAL", "DEPUTY_PRINCIPAL"]);
+  const canCreate = hasRole(["ADMIN", "IT_HANDLER"]);
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ subjectCode: "", subjectName: "", className: "" });
 
   const load = async () => {
-    try { setItems(await api.subjectsAll()); }
+    try { setItems(await api.get('/subjects')); }
     catch (e) { toast.error(e.message); }
   };
   useEffect(() => { load(); }, []);
@@ -27,11 +27,15 @@ const SubjectsPage = () => {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      await api.createSubject(form);
+      const resp=await api.post('/subjects',{
+        "subjectCode":form.subjectCode,
+        "subjectName":form.subjectName,
+        "className":form.className
+      });
       toast.success("Subject created");
       setForm({ subjectCode: "", subjectName: "", className: "" });
       setShowForm(false);
-      load();
+       load();
     } catch (err) { toast.error(err.message); }
   };
 

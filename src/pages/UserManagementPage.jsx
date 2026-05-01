@@ -2,12 +2,16 @@ import { Shield, ShieldOff, RotateCcw, Link2 } from "lucide-react";
 import { toast } from "@/lib/toast";
 import api from "@/lib/api";
 import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ROLES = ["TEACHER","SENIOR_TEACHER","DEPUTY_PRINCIPAL","PRINCIPAL","IT_HANDLER","ADMIN","PARENT"];
 
 const UserManagementPage = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  // const{hasRole}=useAuth()
+  // const admin=hasRole(["ADMIN"])
+  // const it=hasRole(["IT_HANDLER"])
 
   const load = async () => {
     setLoading(true);
@@ -21,25 +25,32 @@ const UserManagementPage = () => {
     const role = window.prompt(`Assign which role?\n${ROLES.join(", ")}`);
     if (!role) return;
     if (!ROLES.includes(role.toUpperCase())) { toast.error("Unknown role"); return; }
-    try { await api.assignRole(id, role.toUpperCase()); toast.success("Role assigned"); load(); }
+    try { 
+      
+      await api.put(`/users/${id}/assign-role?role=${role.toUpperCase()}`);
+       toast.success("Role assigned"); load(); }
     catch (err) { toast.error(err.message); }
   };
 
   const revoke = async (id) => {
     if (!window.confirm("Revoke access for this user?")) return;
-    try { await api.revokeUser(id); toast.success("Access revoked"); load(); }
+    try { await api.put(`/users/${id}/revoke`); 
+      toast.success("Access revoked"); load(); }
     catch (err) { toast.error(err.message); }
   };
 
   const restore = async (id) => {
-    try { await api.restoreUser(id); toast.success("Access restored"); load(); }
+    try { await api.put(`/users/${id}/restore`); toast.success("Access restored"); load(); }
     catch (err) { toast.error(err.message); }
   };
 
   const link = async (username) => {
+    
     const adm = window.prompt("Admission number to link to this parent:");
     if (!adm) return;
-    try { await api.linkParentToStudent(username, adm.trim()); toast.success("Parent linked to student"); load(); }
+    try { await api.put(`/users/${username}/link-student/${adm}`);
+      
+      toast.success("Parent linked to student"); load(); }
     catch (err) { toast.error(err.message); }
   };
 
