@@ -7,23 +7,41 @@ const AssignmentsPage = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({ username: "", subjectCode: "", className: "" });
-
+  const [sub,setsub]=useState([]);
   const load = async () => {
     setLoading(true);
-    try { setItems(await api.assignmentsAll()); }
+    try { 
+      const fetch=await api.get('/subjects')
+
+      setsub(fetch)
+      ; }
     catch (e) { toast.error(e.message); }
     finally { setLoading(false); }
   };
+  const get_assign=async()=>{
+    try{
+      const resp=await api.get('/assignments')
+      setItems(resp)
+    }
+    catch (e) { toast.error(e.message); }
+    finally { setLoading(false); }
+  }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load();
+     get_assign(); }, []);
 
   const submit = async (e) => {
     e.preventDefault();
     try {
-      await api.createAssignment(form);
+      const resp=await api.post('/assignments',{
+        "username":form.username,
+        "subjectCode":form.subjectCode,
+        "className":form.className
+      });
       toast.success("Assignment created");
       setForm({ username: "", subjectCode: "", className: "" });
-      load();
+
+      //load();
     } catch (err) { toast.error(err.message); }
   };
 
@@ -48,7 +66,12 @@ const AssignmentsPage = () => {
               <input className="input" required value={form.username} onChange={(e) => setForm({...form, username: e.target.value})} placeholder="TCH001"/>
             </div>
             <div className="field"><label className="label">Subject Code</label>
-              <input className="input" required value={form.subjectCode} onChange={(e) => setForm({...form, subjectCode: e.target.value.toUpperCase()})} placeholder="MATH101"/>
+            <select onChange={(e) => setForm({...form, subjectCode: e.target.value})} className="select">
+              {sub.map((e)=>(<div>
+                <option value={e.subjectCode}>{e.subjectName}</option>
+              </div>))}
+            </select>
+             {/* <input className="input" required value={form.subjectCode} onChange={(e) => setForm({...form, subjectCode: e.target.value.toUpperCase()})} placeholder="MATH101"/> */}
             </div>
             <div className="field"><label className="label">Class</label>
               <input className="input" required value={form.className} onChange={(e) => setForm({...form, className: e.target.value})} placeholder="Form 3A"/>

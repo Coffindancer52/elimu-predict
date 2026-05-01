@@ -179,7 +179,7 @@ const n=date.getFullYear()
               </div>
               </form>
               
-              <form onSubmit={link} noValidate style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+              {/* <form onSubmit={link} noValidate style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               <hr className="divider"/>
 
               <div>
@@ -206,7 +206,7 @@ const n=date.getFullYear()
                       <label className="label text-xs">National ID Number</label>
                       <input className="input" required inputMode="numeric" pattern="\d*" placeholder="e.g. 12345678" value={form.parentIdNumber} onChange={(e) => setDigits("parentIdNumber", e.target.value)} maxLength={10}/>
                       {errors.parentIdNumber && <p style={errStyle}>{errors.parentIdNumber}</p>}
-                    </div> */}
+                    </div> 
                   </div>
                   <div className="grid grid-2">
                     <div className="field">
@@ -242,7 +242,7 @@ const n=date.getFullYear()
                 <button type="button" className="btn btn-outline" onClick={() => setOpen(false)}>Cancel</button>
                 <button type="submit" className="btn btn-primary"><GraduationCap />Link Parent</button>
               </div>
-            </form>
+            </form> */}
           </div>
         </div>)}
     </>);

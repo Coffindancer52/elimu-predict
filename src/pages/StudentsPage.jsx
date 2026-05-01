@@ -12,35 +12,31 @@ const StudentsPage = () => {
     const cl="Form 1N"
     const [user,setUser]=useState([]);
     
-    const fetch=async()=>{
-      try{
-        const fetch=await api.get(`/students/${n}`)
-        const ft=await api.get(`/students/class/${cl}`)
-        // alert("name is"+fetch.fullName+"and class name is"
-        //   +fetch.className
-        //   +"and admission number is"+fetch.admissionNumber
-        // +"activity status is"+fetch.isActive)
-
-        const f2={
-          "name":ft.fullName,
-          "classn":ft.className,
-          "admno":ft.admissionNumber
-        }
-        const f1={
-          "name":fetch.fullName,
-          "classn":fetch.className,
-          "admno":fetch.admissionNumber
-        }
-        
-        setUser(ft)
-      }
-      catch(error){
-        alert(error.message)
-      }
+    const fetchStudents = useCallback(async () => {
+    setLoading(true);
+    try {
+      
+      const query = search.trim() === "" ? cl : search;
+      const response = await api.get(`/students/class/${query}`);
+      
+      setUser(response);
+    } catch (error) {
+      console.error("Fetch error:", error);
+      // Avoid using alert() for every keystroke; maybe a toast or silent fail is better
+    } finally {
+      setLoading(false);
     }
-    useEffect(()=>{
-      fetch()
-    },[])
+  }, [search]); 
+
+  // 2. Trigger fetch whenever 'search' changes
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      fetchStudents();
+    }, 300); // 300ms debounce to prevent spamming the API on every keystroke
+
+    return () => clearTimeout(handler); // Cleanup timeout
+  }, [fetchStudents]);
+
     // const filtered = user.filter((s) => s.fullName.toLowerCase().includes(search.toLowerCase()) || s.admissionNo.toLowerCase().includes(search.toLowerCase()));
     return (<div className="animate-fade-in">
       <div className="row-between mb-6">
@@ -56,7 +52,7 @@ const StudentsPage = () => {
       <div className="search-bar">
         <div className="input-group">
           <Search className="icon-left"/>
-          <input className="input with-icon-left" placeholder="Search by name or admission no..." value={search} onChange={(e) => setSearch(e.target.value)}/>
+          <input className="input with-icon-left" placeholder="Search by name or admission no..." value={search}  onChange={(e) => setSearch(e.target.value)}/>
         </div>
       </div>
 
