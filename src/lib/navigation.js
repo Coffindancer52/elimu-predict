@@ -109,6 +109,32 @@ export const NAV_ITEMS = [
         icon: GraduationCap,
         roles: ["PARENT"],
     },
+    {
+        label: "Parent Dashboard",
+        path: "/parent/dashboard",
+        icon: GraduationCap,
+        roles: ["PARENT"],
+    },
+    {
+        label: "View Children",
+        path: "/parent-children",
+        icon: GraduationCap,
+        roles: ["PARENT"],
+    },
+    {
+        label: "Child Profile",
+        path: "/parent/child/:adm",
+        icon: GraduationCap,
+        roles: ["PARENT"],
+        hidden: true,
+    },
+    {
+        label: "AI Suggestions",
+        path: "/parent/child/:adm/suggestions",
+        icon: Lightbulb,
+        roles: ["PARENT"],
+        hidden: true,
+    },
 ];
 
 export function getNavForRole(role) {
